@@ -28,6 +28,7 @@ Your folders should look like this:
 # Lets create a basic bot!
 
 I highly recommend typing the code out instead of copying/pasting, as you'll have more of an understanding on what you are doing in the long run.
+
 *note: this is how I create a core for my bots, if you find a better or simpler way online then by all means do it that way.*
 
 ### In your config.js copy/paste the following:
