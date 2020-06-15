@@ -216,3 +216,64 @@ module.exports = {
 4. Run your bot, you should see the following message when you type (prefix)help.
 
 ![how it should look](https://i.imgur.com/JAx2u1V.png)
+
+## Creating a clear / purge command
+1. Navigate to your config.js file and add the following:
+```
+    "adminrole": "YOUR ADMIN ROLE ID HERE", // Server Admin Role.
+    "modrole": "YOUR MOD ROLE ID HERE", // Mod Role.
+    "logchannel": "YOUR LOG CHANNEL ID", // your log channel
+```
+*note: you don't have to use a config file here, you can simply replace config.example with "ID HERE"*
+
+2. Navigate to your commands folder.
+3. Create a new file called clear.js.
+4. Copy Paste the following code:
+```
+module.exports = {
+    name: "clear",
+    args: true, // REQUIRE ARGS
+    async execute(client, message, args) {
+    
+        const Discord = require("discord.js");
+        const fs = require('fs');
+        const config = require('../config');
+        let name = message.author.username; // We use this for the embed.
+        let guild = message.guild;
+
+        if (message.deletable) {
+            message.delete();
+        }
+	// Check if the user is the owner, admin, or moderator role
+        if (message.author.id != config.owner && !message.member.roles.cache.some(role => role.id === config.adminrole || role.id === config.modrole)) return message.channel.send(new Discord.MessageEmbed().setDescription("You do not have permission").setColor("#FF0000"));
+ 
+        let deleteAmount; // creating the deleteAmount var.
+	//Cannot be over 100
+        if (parseInt(args[0]) > 100) {
+            deleteAmount = 100;
+        }
+	// anything 100 and below
+        else {
+            deleteAmount = parseInt(args[0]);
+        }
+	// Bulk Delete our deleteAmount Variable if there is an error return our error message.
+        message.channel.bulkDelete(deleteAmount, true).catch(err => {
+            message.channel.send(new Discord.MessageEmbed()
+            .setDescription(`An error orrured.`)
+            .setFooter(`cmd initiator ${name}`)
+            .setColor(config.color)
+            );
+            return;
+          });
+	
+        // Log our Message in a logchannel.
+        message.guild.channels.resolve(config.logchannel).send(new Discord.MessageEmbed()
+            .setDescription(`${name} purged ${args} messages`)
+            .setFooter(`Channel: ${message.channel.name}`)
+            .setColor(config.color)
+            );
+    }
+};
+```
+
+More to come soon 6/15/2020 HP
