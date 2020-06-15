@@ -128,7 +128,7 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command); 
 };
 ```
-4. At the bottom of your index.js above `client.login(config.toke);` paste the following code:
+4. At the bottom of your index.js above `client.login(config.token);` paste the following code:
 
 ```
 client.on('message', async message => {
