@@ -33,7 +33,8 @@ I highly recommend typing the code out instead of copying/pasting, as you'll hav
 
 ### In your config.js copy/paste the following:
 
-```let config = {
+```
+let config = {
   // BOT INFO
   "token": "Your token here", // Enter the token for the bot application here.
   "activity": "Your Activity Here", // This is the activity for the bot i.e Playing ...
@@ -45,7 +46,8 @@ module.exports = config;
 ```
 ### In your index.js copy/paste the following:
 
-```const Discord = require('discord.js');
+```
+const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require('./config');
 
@@ -71,7 +73,8 @@ Lets test our bot!
 
 ### Join Message
 
-```client.on("guildMemberAdd", function(message) {
+```
+client.on("guildMemberAdd", function(message) {
 
   let guild = message.guild;
   let member = message;
@@ -85,7 +88,8 @@ Lets test our bot!
 
 ### Leave Message
 
-```client.on("guildMemberRemove", function(message) {
+```
+client.on("guildMemberRemove", function(message) {
   let guild = message.guild;
   let member = message;
 
