@@ -2,7 +2,7 @@
 
 Hello and welcome to my discord.js code examples page! If at any time you feel you do not understand the code join my discord for support [here](https://discord.gg/hDb8Exk).
 
-You can also find my youtube channel [here](https://www.youtube.com/channel/UCdC9v6GQzjJGUJZ9VN5zklA) where i Will be posting discord.js videos!
+You can also find my youtube channel [here](https://www.youtube.com/channel/UCdC9v6GQzjJGUJZ9VN5zklA) where I will be posting discord.js videos!
 
 
 # Getting Started
