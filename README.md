@@ -213,6 +213,6 @@ module.exports = {
 ```
 *note: some of our variables are unused right now, but can be used down the road in future tutorials.*
 
-4. Run your bot, you should see the following message when you type (prefix)help:
+4. Run your bot, you should see the following message when you type (prefix)help.
 
 ![how it should look](https://i.imgur.com/JAx2u1V.png)
