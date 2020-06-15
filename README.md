@@ -114,17 +114,17 @@ Test your bot!
 # Creating a Command Handler with cooldowns & Arguments
 
 1. Create a folder inside your project called commands.
-2. Install fs by opening console (`ctrl + shift + ~`) and typing `npm install fs`.
+2. Install fs ( File System ) by opening console (`ctrl + shift + ~`) and typing `npm install fs`.
 3. at the top of your inxex copy/paste or type the following:
 
 ```
 const cooldowns = new Discord.Collection(); // This will be used for our cooldowns
-const fs = require('fs'); // this is requiring fs that we just installed
+const fs = require('fs'); // this is requiring fs that we just installed.
 
 const commandFiles = fs.readdirSync('./commands'); // this is reading the cmd folder
 
 for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
+  const command = require(`./commands/${file}`); // goes to our commands foler and file name of said command.
   client.commands.set(command.name, command); 
 };
 ```
@@ -193,14 +193,16 @@ module.exports = {
     async execute(client, message, args) {
     
         const Discord = require("discord.js");
-        const fs = require('fs');
+        const fs = require('fs'); // not used in this help command, but can be in the future.
         const config = require('../config');
-        let name = message.author.username;
+        let name = message.author.username; // not used in this help command, but can be used for mentionin a user when they type help... (Ex. `${name}, here is a list of commands.`)
         let guild = message.guild;
 
     // Our Help Message that will be sent
     message.channel.send(new Discord.MessageEmbed()
             .setTitle("Your Title HERE")
+            // Add Mutliple Fields Documentaion can be found here for embeds https://discordjs.guide/popular-topics/embeds.html
+            // Example field { name: 'Your Field name', value: 'Your value here'},
             .addFields(
                 { name: 'User Commands', 
                 value: `
@@ -240,7 +242,7 @@ module.exports = {
         const config = require('../config');
         let name = message.author.username; // We use this for the embed.
         let guild = message.guild;
-
+  // If we can delete the message, then delete it.
         if (message.deletable) {
             message.delete();
         }
