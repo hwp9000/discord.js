@@ -53,7 +53,7 @@ const config = require('./config');
 
 client.on('ready', () => {
 	console.log('Bot is up and running');
-  client.user.setActivity(activity, {
+  client.user.setActivity(config.activity, {
     type: 'WATCHING'
   });
 });
