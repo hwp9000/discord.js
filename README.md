@@ -1,4 +1,4 @@
-# Discord.js Examples
+# Discord.js Guide
 
 Hello and welcome to my discord.js code examples page! If at any time you feel you do not understand the code join my discord for support [here](https://discord.gg/hDb8Exk).
 
