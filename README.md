@@ -8,10 +8,29 @@ You can also find my youtube channel [here](https://www.youtube.com/channel/UCdC
 # Getting Started
 
 Before getting started I recommend using visual studio code, it's free, and can be found [here](https://code.visualstudio.com/).
+1. Create a discord bot [here](https://discord.com/developers/applications).
 
-1. Open Visual Studio code, create a new folder, and create two files within your folder:
-  1. Create an index.js file.
-  2. Create a config.js file.
+Click New Application
+
+![stepone](https://i.imgur.com/BxmknCh.png)
+
+Set a name for your bot/application.
+
+![steptwo](https://i.imgur.com/XFiJch9.png)
+
+Click Bot.
+
+![stepthree](https://i.imgur.com/ZlUrxj9.png)
+
+Press Add Bot
+
+![stepfour](https://i.imgur.com/k3nxJn8.png)
+
+Copy your Token for your bot.
+
+![stepfive](https://i.imgur.com/68A2Qyr.png)
+
+2. Open Visual Studio code, create a new folder, and create two files within your folder: `index.js` & `config.js`
 
 Your folders should look like this:
 
