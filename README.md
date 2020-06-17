@@ -30,7 +30,7 @@ Copy your Token for your bot.
 
 ![stepfive](https://i.imgur.com/68A2Qyr.png)
 
-2. Open Visual Studio code, create a new folder, and create two files within your folder: `index.js` & `config.js`
+2. Create a new folder and open it in Visual Studio Code.Once opened, create two files within your folder: `index.js` & `config.js`.
 
 Your folders should look like this:
 
@@ -40,7 +40,7 @@ Your folders should look like this:
 
 3. Now we need to install node.js and discord.js so run the following commands: `npm install discord.js` & `npm install node`.
 
-4. You should now have a package-lock.json file. Moreover, your folder should now look like this:
+4. Your folder should now look like this:
 
 ![folder2](https://i.imgur.com/xpI8g6x.png)
 
@@ -52,21 +52,43 @@ I highly recommend typing the code out instead of copying/pasting, as you'll hav
 
 *note: this is how I create a core for my bots, if you find a better or simpler way online then by all means do it that way.*
 
-### In your config.js copy/paste the following:
+### Creating your config.js
+
+Before we get our bot up and running we need to do a couple things:
+
+1. Let's first begin by creating a variable called config in your config.js:
 
 ```
+let config = {};
+```
+2. Now we need to grab our bot token that coppied before:
+
+```
+let config ={
+  "token": "YOUR TOKEN HERE", // Enter your bot token here!
+};
+```
+3. Now we are going to set up our config for join/leave messages, an activity, a prefix,a color we will use for our [embeds](https://discord.js.org/#/docs/main/stable/class/MessageEmbed), and then we will export them use outside our file.
+```
 let config = {
-  // BOT INFO
   "token": "Your token here", // Enter the token for the bot application here.
-  "activity": "Your Activity Here", // This is the activity for the bot i.e Playing ...
-  "prefix": "Your Prefix Here", // Prefix for bot commands.
+  "activity": "Your Activity Here", // This is the activity for the bot (Ex. Watching <activity>)
+  "prefix": "Your Prefix Here", // Prefix for bot commands. (Ex. -help, -ping)
   "joinleave": "Your Join/Leave Channel", // the id of your join/leave channel. (Ex. 711986227070500884)
   "color": "Your Color Code here", // The HEX Id for your color code (Ex. #0000FF) 
 };
 module.exports = config;
 ```
-### In your index.js copy/paste the following:
+### Setting up your index.js
 
+1. We need to set up some constant variables for our bot to work! At the top of your index.js file create the following constants:
+
+```
+const Discord = require('discord.js'); // Here we create a constant for Discord to require discord.js
+const client = new Discord.Client(); // Here we have client set to a new Discord Client.
+const config =  require('./config'); // Here we state that config is refering to our config file so if we use config.token it's refering to the config file, with the value we gave token.
+```
+2. Next we are going to have the console log (Bot is up and running) when the client is ready, set our bot's activity, and login our client!
 ```
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -75,40 +97,43 @@ const config = require('./config');
 client.on('ready', () => {
 	console.log('Bot is up and running');
   client.user.setActivity(config.activity, {
-    type: 'WATCHING'
+    type: 'WATCHING' // Note this can be any of the following: WATCHING , LISTENING, PLAYING, STREAMING.
   });
 });
-
-client.login(config.token);
+// Log in the client using our token!
+client.login(config.token); // NOTE: if you are not using our config this can be replaced with "YOUR TOKEN"
 ```
 
-Lets test our bot! 
+### Lets test our bot! 
 1. Open console by pressing `ctrl + shift + ~` on your keyboard.
 2. Type in `node .`. ( This will start our index file for our bot).
+
+![picturelog](https://i.imgur.com/fRNXnbm.png)
 
 *your console should have logged `Bot is up and running`! If this did not happen please check your console for errors*
 
 # How to create Join/Leave Messages!
 
-1. In your index.js file copy/paste the following code:
+1. In your index.js file we need to create two client.on events, one being `"guildMemberAdd"` and the other `"guildMemberRemove"`.
 
 ### Join Message
 
 ```
+// When a member joins then trigger our message event.
 client.on("guildMemberAdd", function(message) {
 
   let guild = message.guild;
   let member = message;
-
+// Now we are going to resolve the channel ID for our join/leave channel, and then send a new discord message embed with our description being @member has joined, and the color being our hex color we assigned in our config!
   message.guild.channels.resolve(config.joinleave).send(new Discord.MessageEmbed()
-  .setDescription(`${member.user} has joined.`)
-  .setColor(config.color));
+  .setDescription(`${member.user} has joined.`) // member.user will be an @ ping to the user!
+  .setColor(config.color)); // Note: config.color can be replaced with "YOUR HEX COLOR HERE"
 });
 ```
 *When the client sees a guild member has been added it will then run the function for the welcome message.*
 
 ### Leave Message
-
+1. Here we do the same exact code as above, but change `"guildMemberAdd"` to `"guildMemberRemove"` and change the description message.
 ```
 client.on("guildMemberRemove", function(message) {
   let guild = message.guild;
@@ -133,8 +158,8 @@ Test your bot!
 # Creating a Command Handler with cooldowns & Arguments
 
 1. Create a folder inside your project called commands.
-2. Install fs ( File System ) by opening console (`ctrl + shift + ~`) and typing `npm install fs`.
-3. at the top of your inxex copy/paste or type the following:
+2. Install fs ( File System ) by opening console (`ctrl + shift + ~`) and typing `npm install fs`. This is node's file system, you can read about it [here](https://nodejs.org/api/fs.html).
+3. at the top of your index add the following:
 
 ```
 const cooldowns = new Discord.Collection(); // This will be used for our cooldowns
@@ -147,7 +172,9 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command); 
 };
 ```
-4. At the bottom of your index.js above `client.login(config.token);` paste the following code:
+4. At the bottom of your index.js above `client.login(config.token);` add the following code:
+
+*this is our more advanced command handler, a simpler one can be found on discord.js website located [here](https://discordjs.guide/command-handling/#individual-command-files).*
 
 ```
 client.on('message', async message => {
@@ -204,11 +231,12 @@ client.on('message', async message => {
 
 1. Navigate to your commands folder.
 2. Create a new file called help.js
-3. Inside your help.js file copy/paste the following code:
+3. Inside your help.js file add the following code:
 ```
 module.exports = {
-    name: "help",
-    args: false,
+    name: "help", // The name of our command, in this case -help
+    args: false, // if the command requires arguments, this can be true or false.
+    //Additionall we could have a cooldown here by having typing "cooldown: 0," and replacing 0 with a number of milliseconds for the cooldown.
     async execute(client, message, args) {
     
         const Discord = require("discord.js");
@@ -223,6 +251,7 @@ module.exports = {
             // Add Mutliple Fields Documentaion can be found here for embeds https://discordjs.guide/popular-topics/embeds.html
             // Example field { name: 'Your Field name', value: 'Your value here'},
             .addFields(
+		// Here we set the fields name to User Commands, and then the value to -help display a help message.
                 { name: 'User Commands', 
                 value: `
                 \`-help\` display a help message`},)
