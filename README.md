@@ -61,7 +61,7 @@ Before we get our bot up and running we need to do a couple things:
 ```
 let config = {};
 ```
-2. Now we need to grab our bot token that coppied before:
+2. Now we need to grab our bot token:
 
 ```
 let config ={
