@@ -68,7 +68,7 @@ let config ={
   "token": "YOUR TOKEN HERE", // Enter your bot token here!
 };
 ```
-3. Now we are going to set up our config for join/leave messages, an activity, a prefix,a color we will use for our [embeds](https://discord.js.org/#/docs/main/stable/class/MessageEmbed), and then we will export them use outside our file.
+3. Now we are going to set up our config for join/leave messages, an activity, a prefix, a color for our [embeds](https://discord.js.org/#/docs/main/stable/class/MessageEmbed), and then we will export them use outside our file.
 ```
 let config = {
   "token": "Your token here", // Enter the token for the bot application here.
