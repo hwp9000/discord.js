@@ -159,13 +159,13 @@ Test your bot!
 
 New and more clean guide on command handler coming soon!
 
-### Creating a help command
+# Creating a help command
 
-1. Navigate to your commands folder.
-2. Create a new file called help.js
-3. Inside your help.js file add the following code:
+Here we will be using [embeds](https://discordjs.guide/popular-topics/embeds.html) to make a fancy looking help command
+
 ```
 module.exports = {
+    //Depending on your command handler this may be different!
     name: "help", // The name of our command, in this case -help
     args: false, // if the command requires arguments, this can be true or false.
     //Additionall we could have a cooldown here by having typing "cooldown: 0," and replacing 0 with a number of milliseconds for the cooldown.
@@ -174,14 +174,14 @@ module.exports = {
         const Discord = require("discord.js");
         const fs = require('fs'); // not used in this help command, but can be in the future.
         const config = require('../config');
-        let name = message.author.username; // not used in this help command, but can be used for mentionin a user when they type help... (Ex. `${name}, here is a list of commands.`)
+        let name = message.author.id; // not used in this help command, but can be used for mentionin a user when they type help... (Ex. `<@${name}>, here is a list of commands.`)
         let guild = message.guild;
 
     // Our Help Message that will be sent
     message.channel.send(new Discord.MessageEmbed()
             .setTitle("Your Title HERE")
-            // Add Mutliple Fields Documentaion can be found here for embeds https://discordjs.guide/popular-topics/embeds.html
-            // Example field { name: 'Your Field name', value: 'Your value here'},
+            // Example field { name: 'Your Field name', value: 'Your value here'}
+	    //You can also use .setDescription("") instead of using fields!
             .addFields(
 		// Here we set the fields name to User Commands, and then the value to -help display a help message.
                 { name: 'User Commands', 
@@ -207,14 +207,11 @@ module.exports = {
     "logchannel": "YOUR LOG CHANNEL ID", // your log channel
 ```
 *note: you don't have to use a config file here, you can simply replace config.example with "ID HERE"*
-
-2. Navigate to your commands folder.
-3. Create a new file called clear.js.
-4. Copy Paste the following code:
 ```
 module.exports = {
-    name: "clear",
-    args: true, // REQUIRE ARGS
+    //Depending on your command handler this may be different!
+    name: "clear", // The name of the commands
+    args: true, // REQUIRE ARGS true = args are required false = args are not required
     async execute(client, message, args) {
     
         const Discord = require("discord.js");
