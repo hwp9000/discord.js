@@ -157,76 +157,8 @@ Test your bot!
 
 # Creating a Command Handler with cooldowns & Arguments
 
-1. Create a folder inside your project called commands.
-2. Install fs ( File System ) by opening console (`ctrl + shift + ~`) and typing `npm install fs`. This is node's file system, you can read about it [here](https://nodejs.org/api/fs.html).
-3. at the top of your index add the following:
+New and more clean guide on command handler coming soon!
 
-```
-const cooldowns = new Discord.Collection(); // This will be used for our cooldowns
-const fs = require('fs'); // this is requiring fs that we just installed.
-
-const commandFiles = fs.readdirSync('./commands'); // this is reading the cmd folder
-
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`); // goes to our commands foler and file name of said command.
-  client.commands.set(command.name, command); 
-};
-```
-4. At the bottom of your index.js above `client.login(config.token);` add the following code:
-
-*this is our more advanced command handler, a simpler one can be found on discord.js website located [here](https://discordjs.guide/command-handling/#individual-command-files).*
-
-```
-client.on('message', async message => {
-  if (message.channel.type === 'dm') return; // If the channel was the bots DM's then return.
-  if (!message.content.startsWith(config.prefix)) return;
-  const args = message.content.slice(config.prefix.length).split(/ +/);
-  const commandName = args.shift().toLowerCase();
-
-  if (!client.commands.has(commandName)) return;
-
-  const command = client.commands.get(commandName);
-  if (command.args && !args.length) {
-    let reply = `You didn't provide any arguments, ${message.author}!`; // If the command required args
-
-    if (command.usage) {
-      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``; // if the command was used wrong.
-    }
-
-    return message.channel.send(new Discord.MessageEmbed().setDescription(reply).setColor(config.color));
-  }
-
-  if (!cooldowns.has(command.name)) {
-    cooldowns.set(command.name, new Discord.Collection());
-  }
-
-// Create a new date
-  const now = Date.now();
-  const timestamps = cooldowns.get(command.name);
-  const cooldownAmount = (command.cooldown || 3) * 1000;
-
-  if (timestamps.has(message.author.id)) {
-    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
-    if (now < expirationTime) {
-      const timeLeft = (expirationTime - now) / 10000000;
-    
-        return message.channel.send(new Discord.MessageEmbed().setDescription(`${message.author}, you must be impatient....please wait ${timeLeft.toFixed(1)} more minutes before reusing the \`${command.name}\` command.`));
-    }
-  }
-
-  timestamps.set(message.author.id, now);
-  setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-
-
-  try {
-    command.execute(client, message, args);
-  } catch (error) {
-    console.error(error);
-    message.reply('there was an error trying to execute that command!');
-  }
-});
-```
 ### Creating a help command
 
 1. Navigate to your commands folder.
