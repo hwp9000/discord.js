@@ -67,13 +67,13 @@ client.on('message', async message => {
   const timestamps = cooldowns.get(command.name);
   const cooldownAmount = (command.cooldown || 3) * 1000;
 
-  if (timestamps.has(message.author.id)) {
+if (timestamps.has(message.author.id)) {
     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
     if (now < expirationTime) {
-      const timeLeft = (expirationTime - now) / 10000000;
-    
-        return message.channel.send(new Discord.MessageEmbed().setDescription(`${message.author}, you must be impatient....please wait ${timeLeft.toFixed(1)} more minutes before reusing the \`${command.name}\` command.`));
+      const timeLeft = (expirationTime - now) / 1000;
+      
+      return message.channel.send(new Discord.MessageEmbed().setDescription(`${message.author}, you must be impatient....wait ${Math.round(timeLeft /60)} more Minutes before \`${command.name}\` command.`));
     }
   }
 
